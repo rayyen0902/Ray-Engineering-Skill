@@ -28,6 +28,13 @@ TODO
 
 - None
 
+## Last phase transition
+
+- From: TODO
+- To: TODO
+- Trigger: TODO
+- Date: YYYY-MM-DD
+
 ## Next priority
 
 1. TODO

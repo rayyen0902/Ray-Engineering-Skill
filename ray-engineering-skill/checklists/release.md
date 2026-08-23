@@ -1,9 +1,9 @@
 # Release Gate
 
-Rules: items marked **(blocking)** must pass or be explicitly waived by the human. Mark non-applicable items as `N/A: <reason>`; never silently skip a line. Prefer automated or recorded evidence where practical.
+Rules: items marked **(blocking)** must pass or be explicitly waived by the human. Mark non-applicable items as `N/A: <reason>`; never silently skip a line. Mark automatable items with `(automatable)` and link the script/CI check when one exists; manual checklist review is the fallback, not the preferred mechanism.
 
 - [ ] **(blocking)** Scope is complete
-- [ ] **(blocking)** Critical tests pass
+- [ ] **(blocking)** Critical tests pass `(automatable)`
 - [ ] **(blocking)** Known critical issues resolved
 - [ ] Version updated if applicable
 - [ ] **(blocking)** Changelog updated
