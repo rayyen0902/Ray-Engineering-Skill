@@ -1,9 +1,9 @@
 ---
-name: project-engineering
-description: Guide a human and AI coding agent through the lifecycle of a new software project, from idea and requirements through architecture, implementation, testing, release, and maintenance. Use when initializing a project, establishing its engineering documentation system, or determining what should happen next in an AI-first development workflow.
+name: ray-engineering-skill
+description: Guide a human and AI coding agent through the lifecycle of a software project, from idea and requirements through architecture, implementation, testing, release, and maintenance. Use when initializing a project, establishing its engineering documentation system, or determining what should happen next in an AI-first development workflow.
 ---
 
-# Project Engineering Skill
+# Ray Engineering Skill
 
 ## Purpose
 
@@ -15,45 +15,62 @@ Core principle:
 
 > Do not optimize for writing code quickly. Optimize for reducing ambiguity before code is written, then make completion objectively verifiable.
 
-## Operating model
+## How to use this skill
 
-The project lifecycle is:
+This file is the routing and policy layer. It defines principles, gates, phase order, and conflicts. It is not the step-by-step procedure source.
 
-1. Initiate
-2. Clarify the problem
-3. Define requirements
-4. Define scope and acceptance criteria
-5. Design architecture
-6. Record important decisions
-7. Establish implementation rules
-8. Plan work
-9. Implement
-10. Verify
-11. Review
-12. Release
-13. Maintain and evolve
+- Execution procedures live in `workflows/`.
+- Pass/fail gate criteria live in `checklists/`.
+- Artifact skeletons live in `templates/`.
 
-The agent must know which phase the project is in and must not silently skip a phase when skipping would create material risk.
+Internal conflict rule:
+
+- For principles and approval gates, this file wins.
+- For procedure order, the routed workflow wins.
+- For artifact format, the routed template wins.
+- For gate pass criteria, the routed checklist wins.
+
+If a detail file contradicts a principle or gate in this file, stop before consequential changes and report the conflict.
+
+## Lifecycle
+
+The project lifecycle has 13 phases. Phases may move backward when later work exposes an earlier gap; when moving backward, update `PROJECT_STATE.md` and record the trigger.
+
+- Phase 0 — Initialize
+- Phase 1 — Clarify
+- Phase 2 — Requirements
+- Phase 3 — Scope
+- Phase 4 — Architecture
+- Phase 5 — Decisions
+- Phase 6 — Agent rules
+- Phase 7 — Plan
+- Phase 8 — Implement
+- Phase 9 — Verify
+- Phase 10 — Review
+- Phase 11 — Release
+- Phase 12 — Maintain and evolve
+
+The agent must know which phase the project is in and must not silently skip a phase when skipping would create material risk. Material risk means the skipped decision affects a Material or Critical item in the change classification below.
 
 ## Required project knowledge
 
-A mature project should maintain these artifacts:
+A mature project should maintain these artifacts, using either a single file or a directory as complexity justifies:
 
 - `README.md` — what the project is
 - `AGENTS.md` — how agents must work in this repository
 - `PROJECT_STATE.md` — current project state
-- `SPEC.md` or a `spec/` directory — what the product/system must do
-- `docs/architecture/` — how the system is designed
-- `docs/decisions/` — why important decisions were made
-- `tasks/` or issue tracker — current executable work
+- `SPEC.md` or `spec/` — what the product/system must do
+- `ARCHITECTURE.md` or `docs/architecture/` — how the system is designed
+- `ADR.md` or `docs/decisions/` — why important decisions were made
+- `tasks/`, an issue tracker, or `templates/TASK.md` entries — current executable work
 - `tests/` — objective verification
 - `CHANGELOG.md` — user-visible evolution
 
-Do not create all artifacts blindly. Create only what the project complexity justifies, but always establish an explicit source of truth for requirements, architecture, state, and verification.
+Do not create all artifacts blindly. Create only what the project complexity justifies, but always establish an explicit source of truth for requirements, architecture, state, tasks, and verification.
 
 ## Source-of-truth rules
 
-When sources conflict:
+When project sources conflict:
 
 1. Explicit current user instruction
 2. Approved current specification
@@ -79,211 +96,85 @@ Minimum gates:
 
 The agent may bypass a gate only when the user explicitly instructs it to do so.
 
-## Phase workflow
+## Phase routing
 
 ### Phase 0 — Initialize
 
-Determine:
+Goal: establish the problem, users, constraints, repository state, and minimum project-management structure before substantial coding.
 
-- project name
-- problem being solved
-- intended users
-- product/system type
-- constraints
-- repository state
-- existing technology, if any
-- desired outcome
-
-Create the minimum project-management structure.
-
-Do not start substantial coding merely because the user described an idea.
+Route: procedure `workflows/project-init.md`; artifacts `templates/README.md`, `templates/SPEC.md`, `templates/PROJECT_STATE.md`, `templates/AGENTS.md`.
 
 ### Phase 1 — Clarify
 
-Ask only questions that materially reduce ambiguity.
+Goal: ask only questions that materially reduce ambiguity, and classify unknowns as Critical, Important, or Optional.
 
-Classify unknowns as:
-
-- Critical — must resolve before the next gate
-- Important — can be resolved during design
-- Optional — defer unless needed
-
-Do not interrogate the user unnecessarily.
+Route: use `workflows/project-init.md` for critical unknowns, then `workflows/requirements.md`; record unresolved questions in `templates/SPEC.md`.
 
 ### Phase 2 — Requirements
 
-Establish:
+Goal: convert the problem into testable requirements with explicit non-goals, assumptions, and acceptance criteria.
 
-- goals
-- users/actors
-- primary use cases
-- functional requirements
-- non-functional requirements
-- constraints
-- explicit non-goals
-- assumptions
-- acceptance criteria
-
-Requirements must be testable where practical.
+Route: procedure `workflows/requirements.md`; gate `checklists/requirements.md`; artifact `templates/SPEC.md`.
 
 ### Phase 3 — Scope
 
-Separate:
+Goal: separate Must/Should/Could/Out of scope and choose the smallest vertical slice for the first implementation target.
 
-- Must have
-- Should have
-- Could have
-- Out of scope
-
-Break the first implementation target into a small vertical slice whenever possible.
+Route: use `workflows/requirements.md`; artifact `templates/SPEC.md`; first slice tasks use `templates/TASK.md`; gate remains `checklists/requirements.md`.
 
 ### Phase 4 — Architecture
 
-Define only as much architecture as necessary.
+Goal: define only as much architecture as necessary to implement safely.
 
-Consider:
-
-- system boundaries
-- modules/services
-- data model
-- interfaces/APIs
-- state and data flow
-- external dependencies
-- security boundaries
-- deployment model
-- observability
-- failure modes
-- scaling assumptions
-
-Avoid speculative complexity.
+Route: procedure `workflows/architecture.md`; gate `checklists/architecture.md`; artifacts `templates/ARCHITECTURE.md`, `templates/ADR.md`.
 
 ### Phase 5 — Decisions
 
-Create an ADR for decisions that are:
+Goal: record decisions that are difficult to reverse, architecturally significant, security-relevant, operationally significant, likely to be questioned later, or chosen after serious alternatives.
 
-- difficult to reverse
-- architecturally significant
-- security-relevant
-- operationally significant
-- likely to be questioned later
-- alternatives were seriously considered
-
-An ADR should contain:
-
-- Context
-- Decision
-- Alternatives
-- Consequences
-- Status
-
-Do not create ADRs for trivial implementation details.
+Route: decision trigger inside `workflows/architecture.md`; artifact `templates/ADR.md`; gate item lives in `checklists/architecture.md`.
 
 ### Phase 6 — Agent rules
 
-Create or update `AGENTS.md` with repository-specific instructions:
+Goal: create or update repository-specific operating rules for agents.
 
-- architecture invariants
-- coding conventions
-- directory ownership
-- test commands
-- build commands
-- forbidden operations
-- generated-file rules
-- dependency rules
-- migration rules
-- review expectations
-
-Keep AGENTS focused on operational rules. Do not turn it into a general project essay.
+Route: artifact `templates/AGENTS.md`; setup procedure `workflows/project-init.md`; downstream enforcement happens in `workflows/implementation.md` and `workflows/testing.md`.
 
 ### Phase 7 — Plan
 
-Convert approved requirements into executable tasks.
+Goal: convert approved requirements into small executable tasks with objective, scope, dependencies, acceptance criteria, and verification method.
 
-Each task should have:
-
-- objective
-- scope
-- dependencies
-- acceptance criteria
-- verification method
-
-Prefer small tasks that can be implemented and verified independently.
+Route: artifact `templates/TASK.md`; inputs from `templates/SPEC.md`, `templates/ARCHITECTURE.md`, and `templates/ADR.md`; sanity-check against `checklists/requirements.md` and `checklists/architecture.md` before implementation.
 
 ### Phase 8 — Implement
 
-Before coding:
+Goal: make the smallest coherent change that satisfies an approved task while preserving architecture invariants.
 
-1. Read applicable `AGENTS.md`
-2. Read relevant specification
-3. Read relevant architecture/ADR
-4. Read `PROJECT_STATE.md`
-5. Inspect existing code
-6. Confirm task scope
-
-During coding:
-
-- make the smallest coherent change
-- preserve architecture invariants
-- add/update tests
-- update documentation when behavior or design changes
-
-Do not refactor unrelated areas unless required.
+Route: procedure `workflows/implementation.md`; task format `templates/TASK.md`; report format `templates/COMPLETION_REPORT.md`.
 
 ### Phase 9 — Verify
 
-Completion requires evidence.
+Goal: prove completion with evidence, starting with the narrowest relevant checks and broadening only as risk warrants.
 
-Run the narrowest relevant checks first, then broader checks as appropriate:
-
-- formatter
-- linter
-- type checker
-- unit tests
-- integration tests
-- end-to-end tests
-- build
-- security checks
-
-Never claim a task is complete merely because code was written.
+Route: procedure `workflows/testing.md`; gates `checklists/testing.md` and `checklists/security.md`; evidence format `templates/COMPLETION_REPORT.md`.
 
 ### Phase 10 — Review
 
-Review for:
+Goal: review correctness, requirements coverage, regressions, security, maintainability, unnecessary complexity, documentation consistency, and test adequacy.
 
-- correctness
-- requirements coverage
-- regressions
-- security
-- maintainability
-- unnecessary complexity
-- documentation consistency
-- test adequacy
-
-If the implementation contradicts an approved decision, either fix it or propose a decision change.
+Route: use the after-coding steps in `workflows/implementation.md` plus the failure protocol in `workflows/testing.md`; gates `checklists/testing.md` and `checklists/security.md`; report format `templates/COMPLETION_REPORT.md`.
 
 ### Phase 11 — Release
 
-Before release:
+Goal: declare release-ready only when release criteria, security disposition, migration/configuration checks, changelog, and state updates are complete.
 
-- verify release criteria
-- update version if applicable
-- update changelog
-- verify migrations
-- verify configuration
-- verify deployment
-- verify rollback strategy where relevant
-- update project state
+Route: procedure `workflows/release.md`; gate `checklists/release.md`; security disposition from `checklists/security.md`; artifacts `templates/CHANGELOG.md`, `templates/PROJECT_STATE.md`, `templates/COMPLETION_REPORT.md`.
 
-### Phase 12 — Maintain
+### Phase 12 — Maintain and evolve
 
-After meaningful work:
+Goal: keep current state, tasks, decisions, affected documentation, known limitations, and next priority accurate after meaningful work.
 
-- update `PROJECT_STATE.md`
-- close or update tasks
-- record important decisions
-- update affected documentation
-- record known limitations
-- identify next priority
+Route: procedure `workflows/maintenance.md`; artifacts `templates/PROJECT_STATE.md`, `templates/CHANGELOG.md`, `templates/ADR.md`, `templates/COMPLETION_REPORT.md`.
 
 ## Project state protocol
 
@@ -306,21 +197,25 @@ Do not use it as a historical log. History belongs in Git, changelog, issues, or
 Classify proposed changes:
 
 ### Trivial
+
 Examples: typo, formatting, local refactor with no behavior change.
 
 Proceed normally.
 
 ### Normal
+
 Examples: feature implementation, bug fix, test changes.
 
 Follow the current task and verification process.
 
 ### Material
+
 Examples: API contract changes, schema changes, service-boundary changes, authentication changes, architecture changes, major dependency changes.
 
 Require impact analysis and update relevant specification/ADR/state before or alongside implementation.
 
 ### Critical
+
 Examples: security boundary changes, destructive migrations, production data changes, irreversible infrastructure changes.
 
 Require explicit human confirmation before execution.
@@ -341,11 +236,11 @@ Never:
 
 ## Completion contract
 
-At the end of a meaningful task, report:
+At the end of a meaningful task, report using `templates/COMPLETION_REPORT.md`:
 
 1. What changed
 2. Why it changed
-3. What was verified
+3. What was verified, including commands and evidence location
 4. What remains uncertain
 5. Whether project documentation/state was updated
 6. What should happen next

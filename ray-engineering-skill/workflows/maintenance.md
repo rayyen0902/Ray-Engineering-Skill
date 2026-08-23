@@ -9,5 +9,6 @@ After meaningful changes:
 5. Update changelog for user-visible changes.
 6. Remove obsolete documentation.
 7. Identify the next priority.
+8. File the completion report for meaningful work using `templates/COMPLETION_REPORT.md`.
 
 Documentation must describe the current system, not an idealized historical version.
