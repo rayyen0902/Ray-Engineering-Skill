@@ -1,6 +1,6 @@
 ---
 name: ray-engineering-skill
-description: Guide a human and AI coding agent through the lifecycle of a software project, from idea and requirements through architecture, implementation, testing, release, and maintenance. Use when initializing a project, establishing its engineering documentation system, or determining what should happen next in an AI-first development workflow.
+description: Guide a human and AI coding agent through the lifecycle of a software project, from idea and requirements through architecture, implementation, testing, release, and maintenance. Use when initializing a project, establishing its engineering documentation system, joining an ongoing project, or determining what should happen next in an AI-first development workflow.
 ---
 
 # Ray Engineering Skill
@@ -82,6 +82,17 @@ When project sources conflict:
 Never treat existing code as automatically authoritative when it contradicts an approved specification or architecture decision.
 
 If a conflict is discovered, stop before making a consequential change and explain the conflict.
+
+## Document freshness
+
+Controlled documents should carry a freshness header where the template provides one: `Status` and `Last verified`. This applies at least to `SPEC.md`, architecture documents, `PROJECT_STATE.md`, and ADRs when their consequences are still active.
+
+Rules:
+
+- Refresh `Last verified` when the relevant gate, review, release, or incident review confirms the document still matches reality.
+- If a controlled document has no `Last verified`, treat it as unverified.
+- If `Last verified` predates the last relevant gate, release, or major implementation change, verify before relying on it.
+- Do not keep long history in controlled documents; history belongs in Git, changelog, issues, or ADRs.
 
 ## Human approval gates
 
@@ -260,6 +271,8 @@ When invoked on an empty or poorly documented repository:
 5. Guide the user through the first unresolved phase.
 6. Create artifacts only after gathering enough information.
 7. Do not generate speculative architecture or requirements just to fill files.
+
+When invoked on an ongoing repository that already has documentation or code, use `workflows/joining.md` before consequential changes.
 
 The goal is not maximum documentation.
 
