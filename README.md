@@ -11,9 +11,11 @@
 1. 先读 `ray-engineering-skill/SKILL.md`。
 2. 按其中的阶段路由，按需加载 `workflows/`、`checklists/`、`templates/`。
 3. 如果是中途接手一个已有项目，先读 `ray-engineering-skill/workflows/joining.md`。
+4. 如果你是编程小白，先读根目录 `BEGINNER_GUIDE.md`。
 
 ### 目录结构
 
+- `BEGINNER_GUIDE.md`：编程小白操作手册（中英文）。
 - `ray-engineering-skill/SKILL.md`：原则、审批门禁、阶段路由、自主性边界、完成契约。
 - `ray-engineering-skill/MANIFEST.md`：文件地图与内部优先级。
 - `ray-engineering-skill/workflows/`：可执行流程。
@@ -38,9 +40,11 @@ Current version: see `VERSION`.
 1. Read `ray-engineering-skill/SKILL.md` first.
 2. Follow its phase routes and load `workflows/`, `checklists/`, and `templates/` only when needed.
 3. When joining an ongoing project, start with `ray-engineering-skill/workflows/joining.md`.
+4. If you are a programming beginner, read root `BEGINNER_GUIDE.md` first.
 
 ### Layout
 
+- `BEGINNER_GUIDE.md`: beginner operations manual, Chinese/English.
 - `ray-engineering-skill/SKILL.md`: principles, approval gates, phase routing, autonomy boundary, completion contract.
 - `ray-engineering-skill/MANIFEST.md`: file map and internal precedence.
 - `ray-engineering-skill/workflows/`: executable procedures.
