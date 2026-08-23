@@ -2,7 +2,7 @@
 
 ## 中文
 
-`ray-engineering-skill/` 是本仓库的技能载荷（payload）。仓库根目录只负责包装、版本和评审记录；安装或分发时，请使用 `ray-engineering-skill/` 目录本身。
+`ray-engineering-skill/` 是本仓库的技能载荷（payload）。仓库根目录只负责包装与版本；安装或分发时，请使用 `ray-engineering-skill/` 目录本身。
 
 当前版本见 `VERSION`。
 
@@ -21,7 +21,10 @@
 - `ray-engineering-skill/workflows/`：可执行流程。
 - `ray-engineering-skill/checklists/`：门禁通过标准。
 - `ray-engineering-skill/templates/`：可复用项目产物模板。
-- `REVIEW.md`：内部评审记录，不属于技能载荷。
+
+### 反馈
+
+后续意见请直接提 issue 或 PR，不再维护单独的评审存档文件。
 
 ### 许可
 
@@ -31,7 +34,7 @@ MIT，见 `LICENSE`。
 
 ## English
 
-`ray-engineering-skill/` is the skill payload. The repository root is only for packaging, versioning, and review records; install or distribute the `ray-engineering-skill/` directory itself.
+`ray-engineering-skill/` is the skill payload. The repository root is only for packaging and versioning; install or distribute the `ray-engineering-skill/` directory itself.
 
 Current version: see `VERSION`.
 
@@ -50,7 +53,10 @@ Current version: see `VERSION`.
 - `ray-engineering-skill/workflows/`: executable procedures.
 - `ray-engineering-skill/checklists/`: pass/fail gate criteria.
 - `ray-engineering-skill/templates/`: reusable project artifact templates.
-- `REVIEW.md`: internal review notes; not part of the skill payload.
+
+### Feedback
+
+Future feedback should come as issues or PRs; no separate review archive file is maintained.
 
 ### License
 
