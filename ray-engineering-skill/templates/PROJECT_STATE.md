@@ -1,5 +1,8 @@
 # Project State
 
+- Status: Current
+- Last verified: YYYY-MM-DD
+
 ## Phase
 
 Initialization

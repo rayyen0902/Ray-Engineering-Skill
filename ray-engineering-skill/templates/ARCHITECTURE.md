@@ -1,45 +1,54 @@
 # Architecture
 
+- Status: Draft
+- Last verified: YYYY-MM-DD
+
+Writing rule: document only decisions that constrain implementation, verification, security, deployment, or future change. If a section is not needed at current complexity, write `N/A: <reason>` instead of inventing detail.
+
 ## 1. Architectural goals
 
-TODO
+What must this architecture make easy, safe, or cheap?
 
 ## 2. System boundaries
 
-TODO
+What is inside the system, what is outside, and what must never cross without an explicit interface?
+
+Example: "Billing provider is outside; only the Billing Adapter may call it."
 
 ## 3. Components
 
-TODO
+| Component | Owns | Must not own | Notes |
+| --- | --- | --- | --- |
+|  |  |  |  |
 
 ## 4. Data model
 
-TODO
+Entities, ownership, retention, and invariants.
 
 ## 5. Interfaces / APIs
 
-TODO
+Contracts that other components or external systems depend on. Link ADRs for hard-to-reverse choices.
 
 ## 6. Data flow
 
-TODO
+Trace the primary write path and read path. Include where validation, authorization, and errors happen.
 
 ## 7. Security boundaries
 
-TODO
+Trust boundaries, secrets location, sensitive data classes, and destructive-operation controls.
 
 ## 8. Deployment
 
-TODO
+Runtime topology, environments, configuration sources, and migration entry points.
 
 ## 9. Failure modes
 
-TODO
+What breaks, how it is detected, and what the safe degradation is.
 
 ## 10. Observability
 
-TODO
+Logs, metrics, traces, alerts, and audit records needed to operate the system.
 
 ## 11. Scaling assumptions
 
-TODO
+Expected load now, next credible step, and what is intentionally not designed for yet.

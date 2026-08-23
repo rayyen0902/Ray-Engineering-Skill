@@ -8,6 +8,8 @@
 
 What outcome should exist when this task is done?
 
+Example: "A user can invite one teammate by email and the invite expires after 7 days."
+
 ## Scope
 
 In scope:
@@ -24,13 +26,13 @@ Out of scope:
 
 ## Acceptance criteria
 
-- [ ] 
+- [ ] Given <context>, when <action>, then <observable result>.
 
 ## Verification method
 
-Narrowest checks first, then broader checks if risk warrants:
+Narrowest checks first, then broader checks if risk warrants. Prefer checks that can run in CI.
 
-- [ ] 
+- [ ] Command/check: `<command>` proves <criterion>.
 
 ## Evidence location
 

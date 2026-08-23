@@ -45,4 +45,10 @@ TODO
 
 Record only facts verified by measurement, tests, incident review, or a reproduced failure that contradict intuition or common assumptions. Each entry must include source and date. If new evidence contradicts an entry, update the entry with the new evidence instead of silently reverting to prior belief.
 
+Format:
+
+- Fact: <what is true here> | Source: <test/run/incident> | Verified: YYYY-MM-DD | Do not assume: <common wrong assumption>
+
+Entries:
+
 - TODO
