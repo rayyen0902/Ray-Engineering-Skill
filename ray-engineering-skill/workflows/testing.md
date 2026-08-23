@@ -4,6 +4,10 @@
 
 A task is complete only when its acceptance criteria have evidence.
 
+## Automation preference
+
+Any constraint that can be checked statically or automatically must be implemented as a script, linter, type rule, test, or CI check. Manual checklist review is reserved for judgment calls. If a checklist item is automatable but not automated yet, mark it `(automatable)` and record the gap.
+
 ## Levels
 
 1. Static checks
